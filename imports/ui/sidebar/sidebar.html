@@ -1,0 +1,25 @@
+<template name="SideBar">
+	<!-- sidebar -->
+	<div class="sidebar-o">
+		<div class="sidebar__avatar">
+			<div class="avatar avatar--align-center">
+				<div class="avatar__img-wrap relative">
+					<span class="avatar__tag">{{usersProfile.initials}}</span>
+				</div>
+				<div class="avatar__content">
+					<div class="avatar__name">{{usersProfile.fullName}}</div>
+					<a href="/view-profile/{{usersProfile.userId}}" class="avatar__view">View profile</a>
+				</div>
+			</div>
+		</div>
+		<ul class="sidebar__nav">
+			<li class="sidebar__nav-item"><a href="/dashboard" class="sidebar__nav-link {{ activeIfTemplateIs 'dashboard' }}">Errands Feed</a></li>
+			<li class="sidebar__nav-item"><a href="/errand-activities" class="sidebar__nav-link {{ activeIfTemplateIs 'errand-activities' }}">Errand Activities</a></li>
+			<li class="sidebar__nav-item"><a href="/favorite-runners" class="sidebar__nav-link {{ activeIfTemplateIs 'favorite-runners' }}">Favorite Runners</a></li>
+			<li class="sidebar__nav-item"><a href="/my-runners" class="sidebar__nav-link {{ activeIfTemplateIs 'my-runners' }}">My Runners</a></li>
+			<li class="sidebar__nav-item"><a href="/notifications" class="sidebar__nav-link {{ activeIfTemplateIs 'notifications' }}">Notifications <span class="sidebar__nav-status">{{notifications.count}}</span></a></li>
+			<li class="sidebar__nav-item"><a href="/help" class="sidebar__nav-link {{ activeIfTemplateIs 'help' }}">Help</a></li>
+		</ul>
+	</div>
+	<!-- sidebar -->
+</template>

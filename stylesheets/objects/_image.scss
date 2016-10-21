@@ -1,0 +1,42 @@
+/**
+ * IMAGE
+ */
+
+.image {
+	background: $red;
+	display: inline-block;
+}
+
+.image--circle {
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+	@include vendor(border-radius, 100%);
+
+	svg {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		@include vendor(transform, translate(-50%, -50%));
+	}
+}
+
+.image--large {
+	width: 120px;
+	height: 120px;
+}
+
+.image--medium {
+	width: 72px;
+	height: 72px;
+}
+
+.image--small {
+	width: 48px;
+	height: 48px;
+}
+
+.image--tiny {
+	width: 32px;
+	height: 32px;
+}

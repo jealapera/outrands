@@ -1,0 +1,208 @@
+<template name="ProfileView">
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 bottom16">
+					<div class="avatar bottom16">
+						<div class="image image--circle image--medium relative">
+							<span class="avatar__tag">{{userProfile.initials}}</span>
+						</div>
+					</div>
+					<div class="profile__label">Full Name</div>
+					<div class="profile__content bottom16">{{userProfile.fullName}}</div>
+					<div class="profile__label">Email</div>
+					<div class="profile__content bottom16">{{emailAddress}}</div>
+					<div class="profile__label">Address</div>
+					<div class="profile__content bottom16">{{userProfile.address}}</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 top16 bottom16">
+					<h4 class="title bottom16"><b>Overall Ratings</b></h4>
+					<div class="profile__label">As an Errand Boss ({{formatRate getBossRating}})</div>
+					<div class="profile__content bottom16">
+						<i class="fa {{bossRate.star1}}" aria-hidden="true"></i>
+						<i class="fa {{bossRate.star2}}" aria-hidden="true"></i>
+						<i class="fa {{bossRate.star3}}" aria-hidden="true"></i>
+						<i class="fa {{bossRate.star4}}" aria-hidden="true"></i>
+						<i class="fa {{bossRate.star5}}" aria-hidden="true"></i>
+					</div>
+					<div class="profile__label">As an Errand Runner ({{formatRate getRunnerRating}})</div>
+					<div class="profile__content bottom16">
+						<i class="fa {{runnerRate.star1}}" aria-hidden="true"></i>
+						<i class="fa {{runnerRate.star2}}" aria-hidden="true"></i>
+						<i class="fa {{runnerRate.star3}}" aria-hidden="true"></i>
+						<i class="fa {{runnerRate.star4}}" aria-hidden="true"></i>
+						<i class="fa {{runnerRate.star5}}" aria-hidden="true"></i>
+					</div>
+					<div class="profile__label">Runner Income</div>
+					<div class="title title--bold" style="color: #f16362;">PHP {{formatNumber getRunnerIncome}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="title title--medium top32 bottom24">My Errand Posts</div>
+			<div class="row">
+				{{#each errandPosts}}
+					{{> CurrentUserErrandPost}}
+				{{/each}}
+			</div>
+			{{#if hasMorePosts}}
+				<button class="button button--red top32" id="show--more">+ Show more</button>
+			{{else}}
+				{{#if noPosts}}
+					{{#if isOwner}}
+						<p class="top32" style="color: #F16362; font-weight: bold;">You haven't posted yet.</p>
+					{{else}}
+						<p class="top32" style="color: #F16362; font-weight: bold;">This user doesn't have any posts yet.</p>
+					{{/if}}
+				{{else}}
+					<p class="top32" style="color: #F16362; font-weight: bold;">No more posts to show.</p>
+				{{/if}}
+			{{/if}}
+		</div>
+		{{> FloatingButton}}
+	</div>
+</template>
+
+<template name="CurrentUserErrandPost">
+	<div class="col-xs-12">
+		<div class="profile-errand">
+			<div class="profile-errand__title">
+				<div class="title title--small"><a href="/view-errand/{{postId}}">{{title}}</a></div>
+				<div class="card__date top16">Posted on <b>{{formatDate postDate}}</b></div>
+				<div class="card__date">Due Date: <b style="color: #f16362;">{{formatDate dueDate}}</b></div>
+				{{#if isOpen}}
+					<div class="card__date">Status: <b style="color: {{color}};">{{postType}}</b></div>
+				{{else}}
+					<div class="card__date">Status: <b style="color: {{color}};">{{status}}</b></div>
+				{{/if}}
+			</div>
+			{{#if isOwner}}
+				{{#if expired}}
+					<div class="profile-errand__actions">
+						<h5 class="bottom16"><b style="color: #f16362;">{{expiration}}</b></h5>
+						<button class="button" id="repost" data-post-id={{postId}}>Repost Errand</button>
+					</div>
+				{{else}}
+					<div class="profile-errand__actions">
+						<button class="button" id="edit" data-post-id={{postId}} disabled="{{isDisabled}}">Edit</button>
+						<button class="button" id="delete" data-post-id={{postId}} disabled="{{isDisabled}}">Delete</button>
+					</div>
+				{{/if}}
+			{{else}}
+				{{#if expired}}
+					<h5 class="top32"><b style="color: #f16362;">{{expiration}}</b></h5>
+				{{/if}}
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+<template name="ExpiredErrand">
+	<div class="modal fade">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Please set up the new due date.</h5>
+				</div>
+				<div class="modal-body">
+					<input type="" name="" id="due-date" placeholder="Due date" required>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" value="Repost" class="button button--red errand-form__submit" id="repost-expired" data-post-id={{repostExpired.postId}} />
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="ErrandPostEdit">
+	<div class="modal fade">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="bottom16">
+					<div class="modal-header">
+						<h5 class="modal-title bottom16"><b>Edit this errand post</b></h5>
+					</div>
+					<div class="modal-body">
+						<div class="col-xs-12 bottom16">
+							<input type="text" name="" id="title" placeholder="Title" maxlength="60" value="{{editErrand.title}}" required>
+						</div>
+						<div class="col-xs-12 bottom16">
+							<textarea id="description" placeholder="Description" class="errand-form__description" required>{{editErrand.description}}</textarea>
+						</div>
+						<div class="col-xs-12 col-sm-8 bottom16">
+							<input type="text" id="item" placeholder="Type your list here">
+						</div>
+						<div class="col-xs-12 col-sm-4 bottom16">
+							<button class="button button--black errand-form__button" id="add-item"><i class="fa fa-plus" aria-hidden="true"></i></button>
+						</div>
+						<div class="col-xs-12 bottom16">
+							<ul class="errand-form__list" id="list">
+								{{#each editErrand.checklist}}
+									<li class="errand-form__list-item">
+										<i class='fa fa-caret-right errand-form__check-ic'></i>
+										{{this}}
+										<i class='fa fa-close errand-form__delete-ic' data-></i>
+									</li>
+								{{/each}}
+							</ul>
+						</div>
+						<div class="col-xs-12 col-sm-6 bottom16">
+							<input type="" name="" id="due-date" placeholder="Due date" value="{{editErrand.dueDate}}" required>
+						</div>
+						<div class="col-xs-12 col-sm-6 bottom16">
+							<input type="number" min="20" step="0.25" name="" id="service-fee" placeholder="Service fee (Minimum of Php 20.00)" value="{{editErrand.serviceFee}}" required>
+						</div>
+						<div class="col-xs-12 bottom16">
+							<select id="errand-category">
+								<option>General Services</option>
+								<option>Shopping</option>
+								<option>Others</option>
+							</select>
+						</div>
+						{{#if hasFavoriteRunners}}
+							<div class="col-xs-12 bottom16">
+								<select id="post-type">
+									<option>Open for Everyone</option>
+									<option>Open for Favorite Runners</option>
+								</select>
+							</div>
+						{{else}}
+							<div class="col-xs-12 bottom16">
+								<select id="post-type">
+									<option>Open for Everyone</option>
+									<option disabled="true">Open for Favorite Runners</option>
+								</select>
+							</div>
+						{{/if}}
+					</div>
+					<div class="modal-footer">
+						<input type="submit" value="Save" class="button button--red errand-form__submit" id="save" data-post-id={{editErrand.postId}} />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="DeleteConfirmation">
+	<div class="modal fade">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Are you sure you want to delete this post?</h5>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" id="yes" data-post-id={{deleteErrand.postId}}>Yes</button>
+					<button type="button" class="btn btn-primary" id="no">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="FloatingButton">
+	<!-- floating action button -->
+		<button class="button button--fab button--red" id="post-errand"><i class="fa fa-plus" aria-hidden="true"></i></button>
+	<!-- floating action button -->
+</template>

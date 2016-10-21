@@ -1,0 +1,36 @@
+/**
+ * TITLE
+ */
+
+.title {
+	margin-top: 0;
+	margin-right: 0;
+	margin-bottom: 0;
+	margin-right: 0;
+	line-height: 1.3;
+	word-break: break-word;
+}
+
+.title--white {
+	color: $white;
+}
+
+.title--medium {
+	font-size: em(28);
+}
+
+.title--small {
+	font-size: em(20);
+}
+
+.title--bold {
+	font-weight: 500;
+}
+
+.sub-title {
+
+}
+
+.sub-title--small {
+	font-size: em(12);
+}

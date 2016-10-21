@@ -1,0 +1,356 @@
+<template name="ErrandView">
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="errand-view">
+				<div class="row">
+					<div class="col-xs-12 col-md-8">
+						<div class="errand-view__wrap bottom16">
+							<div class="errand-view__header">
+								<div class="errand-view__avatar bottom16">
+									<a href="/view-profile/{{errandView.userId}}" class="post-owner" data-user-id={{errandView.userId}}>
+										<div class="image image--circle image--medium relative">
+											<span class="avatar__tag">{{getPostOwnerInfo.initials}}</span>
+										</div>
+									</a>
+									<div>
+										<div class="title title--small title--bold">{{errandView.title}}</div>
+										{{#if completedErrand}}
+											<div class="sub-title sub-title--small">Errand Boss: <b>
+											{{getPostOwnerInfo.fullName}}</b></div>
+										{{else}}
+											<div class="sub-title sub-title--small">Posted by <b>{{getPostOwnerInfo.fullName}}</b></div>
+										{{/if}}
+										<div class="sub-title sub-title--small">Posted on <b>
+										{{formatDate errandView.postDate}}</b></div>
+									</div>
+								</div>
+								{{#if openErrand}}
+									<div class="errand-view__status green bottom16">{{errandView.postType}}</div>
+								{{else}}
+									<div class="errand-view__status bottom16">{{errandView.status}}</div>
+								{{/if}}
+							</div>
+							<div class="errand-view__date-loc bottom16">
+								<div class="errand-view__date bottom16">
+									<span>Due date</span>
+									<b>{{formatDate errandView.dueDate}}</b>
+								</div>
+								<div class="errand-view__location">
+									<span>Location</span>
+									<b>{{getPostOwnerInfo.address}}</b>
+								</div>
+							</div>
+							<div class="errand-view__description bottom16">{{errandView.description}}</div>
+							<div class="title title--bold bottom8">CHECKLIST</div>
+							<ul class="errand-view__list">
+								{{#each errandView.checklist}}
+									<li>{{this}}</li>
+								{{else}}
+									<li>There is nothing to show.</li>
+								{{/each}}
+							</ul>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-4">
+						<div class="errand-view__wrap bottom16">
+							<div class="errand-view__fee-bid">
+								<div class="errand-view__fee bottom16">
+									<span>Service fee</span>
+									<b>{{formatNumber errandView.serviceFee}}</b>
+								</div>
+								{{#if expiredErrand}}
+									<h5 class="top16"><b style="color: #f16362;">This errand has already expired.</b></h5>
+								{{/if}}
+								{{#if runningErrand}}
+									{{#if getBossAndRunner}}
+										<a href="/errand-tracking/{{errandView.postId}}" class="button button--black">View Errand Activity</a>
+									{{/if}}
+								{{else}}
+									{{#if isOwner}}
+										{{#if expiredErrand}}
+											<a href="" class="button button--black" id="repost-expired">Repost Errand</a>
+										{{/if}}
+										{{#if cancelledErrand}}
+											<a href="" class="button button--black" id="repost">Repost Errand</a>
+										{{/if}}
+									{{else}}
+										<div>
+											{{#if completedErrand}}
+											{{else}}
+												{{#if isBid}}
+													{{#if cancelledErrand}}
+													{{else}}
+														{{#if expiredErrand}}
+														{{else}}
+															<form>
+																<div class="errand-view__rating-form clearfix">
+																	<div class="errand-view__select left">
+																		<select id="errand-rating" disabled="true">
+																			<option>Before due date</option>
+																			<option>Less than 24 hours</option>
+																			<option>Less than 12 hours</option>
+																			<option>Less than 6 hours</option>
+																			<option>Less than 3 hours</option>
+																		</select>
+																	</div>
+																	<div class="errand-view__price">
+																		<input type="number" min="20" step="0.25" max="{{formatNumber errandView.serviceFee}}" name="" id="price" value="{{formatNumber badePrice}}" disabled="true" />
+																		<input type="submit" name="" class="button button--black" id="bid" value="Bade" disabled="true" />
+																	</div>
+																</div>
+															</form>
+														{{/if}}
+													{{/if}}
+												{{else}}
+													{{#if cancelledErrand}}
+													{{else}}
+														{{#if expiredErrand}}
+														{{else}}
+															{{#if isOpenforFavorite}}
+																{{#if isFavoriteRunner}}
+																	<form>
+																		<div class="errand-view__rating-form clearfix">
+																			<div class="errand-view__select left">
+																				<select id="errand-rating">
+																					<option>Before due date</option>
+																					<option>Less than 24 hours</option>
+																					<option>Less than 12 hours</option>
+																					<option>Less than 6 hours</option>
+																					<option>Less than 3 hours</option>
+																				</select>
+																			</div>
+																			<div class="errand-view__price">
+																				<input type="number" min="20" step="0.25" max="{{formatNumber errandView.serviceFee}}" name="" id="price" value="{{formatNumber errandView.serviceFee}}">
+																				<input type="submit" name="" class="button button--black" id="bid" value="Bid">
+																			</div>
+																		</div>
+																	</form>
+																{{else}}
+																	<h5 class="top16"><b style="color: #f16362;">You cannot bid this errand.</b></h5>
+																{{/if}}
+															{{else}}
+																<form>
+																	<div class="errand-view__rating-form clearfix">
+																		<div class="errand-view__select left">
+																			<select id="errand-rating">
+																				<option>Before due date</option>
+																				<option>Less than 24 hours</option>
+																				<option>Less than 12 hours</option>
+																				<option>Less than 6 hours</option>
+																				<option>Less than 3 hours</option>
+																			</select>
+																		</div>
+																		<div class="errand-view__price">
+																			<input type="number" min="20" step="0.25" max="{{formatNumber errandView.serviceFee}}" name="" id="price" value="{{formatNumber errandView.serviceFee}}">
+																			<input type="submit" name="" class="button button--black" id="bid" value="Bid">
+																		</div>
+																	</div>
+																</form>
+															{{/if}}
+														{{/if}}
+													{{/if}}
+												{{/if}}
+											{{/if}}
+										</div>
+										<div class="top16" id="error-msg" style="color: #F16362;"></div>
+									{{/if}}
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-md-8">
+					{{#if runningErrand}}
+						<!-- errand-view__runner -->
+						<div class="errand-view__wrap">
+							<div class="title title--bold bottom16">ERRAND RUNNER</div>
+							<div class="errand-view__bidders">
+								{{> ErrandRunner}}
+							</div>
+						</div>
+						<!-- errand-view__runner -->
+					{{/if}}
+					{{#if cancelledErrand}}
+						<!-- errand-view__runner -->
+						<div class="errand-view__wrap bottom16">
+							<div class="title title--bold bottom16">ERRAND RUNNER</div>
+							<div class="errand-view__bidders">
+								{{> ErrandRunner}}
+							</div>
+						</div>
+						<!-- errand-view__runner -->
+						<div class="errand-view__wrap">
+							<div class="title title--bold bottom32">ERRAND REVIEWS</div>
+							<div class="errand-view__bidders">
+								<div class="title title--bold bottom32">
+									<b class="right8">Cancellation Reason</b>
+									<p style="color: #f16362;">{{getReasonForCancellation}}</p>
+								</div>
+								{{> ErrandBossRate}}
+								<div class="bottom16"></div>
+								{{> ErrandRunnerRate}}
+							</div>
+						</div>
+					{{/if}}
+					{{#if completedErrand}}
+						<!-- errand-view__runner -->
+						<div class="errand-view__wrap bottom16">
+							<div class="title title--bold bottom16">ERRAND RUNNER</div>
+							<div class="errand-view__bidders">
+								{{> ErrandRunner}}
+							</div>
+						</div>
+						<!-- errand-view__runner -->
+						<div class="errand-view__wrap">
+							<div class="title title--bold bottom32">ERRAND REVIEWS</div>
+							<div class="errand-view__bidders">
+								{{> ErrandBossRate}}
+								<div class="bottom16"></div>
+								{{> ErrandRunnerRate}}
+							</div>
+						</div>
+					{{/if}}
+					{{#if openErrand}}
+						<!-- errand-view__bidders -->
+						<div class="errand-view__wrap">
+							<div class="title title--bold bottom16">LIST OF BIDDERS ({{errandBids.count}})</div>
+							{{#each errandBidders}}
+								<div class="errand-view__bidders">
+									{{> ErrandBidder}}
+								</div>
+							{{/each}}
+						</div>
+						<!-- errand-view__bidders -->
+					{{/if}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="ErrandRunner">
+	<div class="errand-view__bidders-item">
+		<div class="errand-view__avatar">
+			<a href="/view-profile/{{errandRunnerBid.userId}}">
+				<div class="avatar__img-wrap relative">
+					<span class="avatar__tag">{{errandRunner.initials}}</span>
+				</div>
+			</a>
+			<div>
+				<div class="title title--bold name" data-user-id={{errandRunnerBid.userId}}>{{errandRunner.fullName}}</div>
+				<div class="sub-title sub-title--small">{{errandRunner.address}}</div>
+			</div>
+		</div>
+		<div class="errand-view__bidders-price">
+			<span>To Complete Errand</span>
+			<b>{{errandRunnerBid.toComplete}}</b>
+		</div>
+		<div class="errand-view__bidders-price">
+			<span>Bade price</span>
+			<b>PHP {{formatNumber errandRunnerBid.price}}</b>
+		</div>
+		{{#if cancelledErrand completedErrand}}
+		{{else}}
+			{{#if isOwner}}
+				<div><button class="button button--black accept" disabled="true">Accepted</button></div>
+			{{/if}}
+		{{/if}}
+	</div>
+</template>
+
+<template name="ErrandRunnerRate">
+	<div class="title title--bold bottom16">
+		<b class="right8">Runner's Rate ({{formatRate runnerRate.runnerRate}})</b>
+		<i class="fa {{runnerRate.star1}}" aria-hidden="true"></i>
+		<i class="fa {{runnerRate.star2}}" aria-hidden="true"></i>
+		<i class="fa {{runnerRate.star3}}" aria-hidden="true"></i>
+		<i class="fa {{runnerRate.star4}}" aria-hidden="true"></i>
+		<i class="fa {{runnerRate.star5}}" aria-hidden="true"></i>
+	</div>
+	{{#if noCommentForRunner}}
+		<div>Comment: No Comment</div>
+	{{else}}
+		<div>Comment: {{commentForRunner}}</div>
+	{{/if}}
+</template>
+
+<template name="ErrandBossRate">
+	<div class="title title--bold bottom16">
+		<b class="right8">Boss' Rate ({{formatRate bossRate.bossRate}})</b>
+		<i class="fa {{bossRate.star1}}" aria-hidden="true"></i>
+		<i class="fa {{bossRate.star2}}" aria-hidden="true"></i>
+		<i class="fa {{bossRate.star3}}" aria-hidden="true"></i>
+		<i class="fa {{bossRate.star4}}" aria-hidden="true"></i>
+		<i class="fa {{bossRate.star5}}" aria-hidden="true"></i>
+	</div>
+	{{#if noCommentForBoss}}
+		<div>Comment: No Comment</div>
+	{{else}}
+		<div>Comment: {{commentForBoss}}</div>
+	{{/if}}
+</template>
+
+<template name="ErrandBidder">
+	<div class="errand-view__bidders-item">
+		<div class="errand-view__avatar">
+			<a href="/view-profile/{{userId}}">
+				<div class="avatar__img-wrap relative">
+					<span class="avatar__tag">{{initials}}</span>
+				</div>
+			</a>
+			<div>
+				<div class="title title--bold name" data-user-id={{userId}}>{{fullName}}</div>
+				<div class="sub-title sub-title--small">{{address}}</div>
+			</div>
+		</div>
+		<div class="errand-view__bidders-price">
+			<span>To Complete Errand</span>
+			<b>{{toComplete}}</b>
+		</div>
+		<div class="errand-view__bidders-price">
+			<span>Bade price</span>
+			<b>PHP {{formatNumber price}}</b>
+		</div>
+		{{#if isOwner}}
+			<div><button class="button button--black accept">Accept</button></div>
+		{{/if}}
+	</div>
+</template>
+
+<template name="RepostCancelledErrand">
+	<div class="modal fade">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Please set up the new due date.</h5>
+				</div>
+				<div class="modal-body">
+					<input type="" name="" id="due-date" placeholder="Due date" required>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" value="Repost" class="button button--red errand-form__submit" id="repost-errand" />
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="RepostExpiredErrand">
+	<div class="modal fade">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Please set up the new due date.</h5>
+				</div>
+				<div class="modal-body">
+					<input type="" name="" id="due-date" placeholder="Due date" required>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" value="Repost" class="button button--red errand-form__submit" id="repost-expired-errand" />
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

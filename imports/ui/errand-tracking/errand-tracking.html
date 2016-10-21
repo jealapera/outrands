@@ -1,0 +1,268 @@
+<template name="ErrandTrackingActivity">
+	<!-- main-content -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="errand-view__wrap map bottom16">
+				{{> Map}}
+			</div>
+			<div class="errand-view">
+				<div class="row">
+					<div class="col-xs-12 col-md-8">
+						<div class="errand-view__wrap bottom16">
+							<div class="errand-view__header">
+								<div class="errand-view__avatar bottom16">
+									<a href="/view-profile/{{getPostOwnerInfo.userId}}" class="post-owner" data-user-id={{errandView.userId}}>
+										<div class="image image--circle image--medium relative">
+											<span class="avatar__tag">{{getPostOwnerInfo.initials}}</span>
+										</div>
+									</a>	
+									<div>
+										<div class="title title--small title--bold">{{errandView.title}}</div>
+										<div class="sub-title sub-title--small">Errand Boss: <b>{{getPostOwnerInfo.fullName}}</b></div>
+									</div>
+								</div>
+								<div class="errand-view__status green bottom16">{{errandView.status}}</div>
+							</div>
+							<div class="errand-view__date-loc bottom16">
+								<div class="errand-view__date bottom16">
+									<span>Due date</span>
+									<b>{{formatDate errandView.dueDate}}</b>
+								</div>
+								<div class="errand-view__location">
+									<span>Location</span>
+									<b>{{getPostOwnerInfo.address}}</b>
+								</div>
+							</div>
+							<div class="errand-view__service-fee bottom16">
+								<span>Service Fee</span>
+								<b>PHP {{formatNumber errandView.serviceFee}}</b>
+							</div>
+							<div class="errand-view__description bottom16">{{errandView.description}}</div>
+							<div class="title title--bold bottom8">CHECKLIST</div>
+							<ul class="errand-view__list">
+								{{#each errandView.checklist}}
+									<li>{{this}}</li>
+								{{else}}
+									<li>There is nothing to show.</li>
+								{{/each}}
+							</ul>
+						</div>
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- errand-view__runner -->
+								<div class="errand-view__wrap">
+									<div class="title title--bold bottom16">ERRAND RUNNER</div>
+									<div class="errand-view__bidders">
+										{{> ErrandRunner}}
+									</div>
+								</div>
+								<!-- errand-view__runner -->
+								{{#if isOwner}}
+									{{#if runningErrand}}
+										<div class="clearfix errand-view__buttons top32 bottom16">
+											<a href="" class="button left" id="done">Done</a>
+											<a href="" class="button left" id="cancel">Cancel Errand</a>
+										</div>
+									{{else}}
+										{{#if cancelledErrand}}
+											<div class="errand-view__wrap">
+												{{> RateRunnerCancel}}
+											</div>
+										{{/if}}
+										<div class="clearfix errand-view__buttons top32 bottom16">
+											<input type="submit" name="" class="button left" id="done" value="Done" disabled="true" />
+											<input type="submit" name="" class="button left" id="cancel" value="Cancel Errand" disabled="true" />
+										</div>
+									{{/if}}
+								{{else}}
+									{{#if completedErrand}}
+										<div class="errand-view__wrap">
+											{{> RateBoss}}
+										</div>
+									{{/if}}
+									{{#if cancelledErrand}}
+										<div class="errand-view__wrap">
+											{{> RateBossCancel}}
+										</div>
+									{{/if}}
+								{{/if}}
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-4">
+						<div class="errand-view__wrap bottom16">
+							<div class="errand-view__chat-list-wrap bottom16">
+								<div class="errand-view__chat-list clearfix">
+									{{#if hasMoreMessages}}
+										<a href="" id="show-more-msg" style="color: #F16362; font-weight: bold;">Load more messages...</a>
+									{{else}}
+										{{#if noMessages}}
+											<p style="color: #F16362; font-weight: bold;">You don't have any messages yet.</p>
+										{{/if}}
+									{{/if}}
+									{{#each messages}}
+										{{> Messages}}
+									{{/each}}
+								</div>
+							</div>
+							<div class="errand-view__chat-form clearfix">
+								{{#if runningErrand}}
+									<textarea class="left" id="message" placeholder="Type your message here..." autofocus></textarea>
+									<input type="submit" name="" class="button right" id="send" value="Send" />
+								{{else}}
+									<textarea class="left" id="message" placeholder="Type your message here..." disabled></textarea>
+									<input type="submit" name="" class="button right" id="send" value="Send" disabled="true" />
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- main-content -->
+</template>
+
+<template name="SubmitForm">
+	<div class="modal fade">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="bottom16">
+					<div class="modal-header">
+						<h5 class="modal-title bottom16"><b>Rate this runner</b></h5>
+					</div>
+					<div class="modal-body">
+						<div class="errand-view__rating-form clearfix">
+							<div class="bottom16" style="font-size: 24px;">
+								<a href="" id="star1"><i id="rate1" class="fa fa-star-o" aria-hidden="true"></i></a>
+								<a href="" id="star2"><i id="rate2" class="fa fa-star-o" aria-hidden="true"></i></a>
+								<a href="" id="star3"><i id="rate3" class="fa fa-star-o" aria-hidden="true"></i></a>
+								<a href="" id="star4"><i id="rate4" class="fa fa-star-o" aria-hidden="true"></i></a>
+								<a href="" id="star5"><i id="rate5" class="fa fa-star-o" aria-hidden="true"></i></a>
+							</div>
+							<textarea class="bottom16" id="comment-runner" placeholder="Type your comment here..."></textarea>
+							<div class="bottom16" id="comment-error" style="color: #F16362;"></div>
+						</div>
+						<a href="" class="button" id="rate-runner">Rate</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="CancelForm">
+	<div class="modal fade">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="errand-view__cancel-form bottom16">
+					<div class="modal-header">
+						<h5 class="modal-title bottom16"><b>Do you want to cancel this errand?</b></h5>
+					</div>
+					<div class="modal-body">
+						<textarea id="reason" placeholder="Type your reason here..."></textarea>
+						<div class="bottom" id="error-msg" style="color: #F16362;"></div>
+					</div>
+					<div class="modal-footer">
+						<a href="" class="button" id="submit">Submit</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="RateRunnerCancel">
+	<div class="errand-view__rating">
+		<div><b>Rate this runner</b></div>
+		<div class="errand-view__rating-form clearfix">
+			<div class="bottom16" style="font-size: 24px;">
+				<a href="" id="star1"><i id="rate1" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star2"><i id="rate2" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star3"><i id="rate3" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star4"><i id="rate4" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star5"><i id="rate5" class="fa fa-star-o" aria-hidden="true"></i></a>
+			</div>
+			<textarea class="bottom16" id="comment-runner" placeholder="Type your comment here..."></textarea>
+			<div class="bottom16" id="comment-error" style="color: #F16362;"></div>
+			<input type="submit" class="button left" id="rate-runner-cancel" value="Rate"/>
+		</div>
+	</div>
+</template>
+
+<template name="RateBoss">
+	<div class="errand-view__rating">
+		<div><b>Rate this boss</b></div>
+		<div class="errand-view__rating-form clearfix">
+			<div class="bottom16" style="font-size: 24px;">
+				<a href="" id="star1"><i id="rate1" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star2"><i id="rate2" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star3"><i id="rate3" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star4"><i id="rate4" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star5"><i id="rate5" class="fa fa-star-o" aria-hidden="true"></i></a>
+			</div>
+			<textarea class="bottom16" id="comment-boss" placeholder="Type your comment here..."></textarea>
+			<div class="bottom16" id="comment-error" style="color: #F16362;"></div>
+			<input type="submit" class="button left" id="rate-boss" value="Rate"/>
+		</div>
+	</div>
+</template>
+
+<template name="RateBossCancel">
+	<div class="errand-view__rating">
+		<div><b>Rate this boss</b></div>
+		<div class="errand-view__rating-form clearfix">
+			<div class="bottom16" style="font-size: 24px;">
+				<a href="" id="star1"><i id="rate1" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star2"><i id="rate2" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star3"><i id="rate3" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star4"><i id="rate4" class="fa fa-star-o" aria-hidden="true"></i></a>
+				<a href="" id="star5"><i id="rate5" class="fa fa-star-o" aria-hidden="true"></i></a>
+			</div>
+			<textarea class="bottom16" id="comment-boss" placeholder="Type your comment here..."></textarea>
+			<div class="bottom16" id="comment-error" style="color: #F16362;"></div>
+			<input type="submit" class="button left" id="rate-boss-cancel" value="Rate"/>
+		</div>
+	</div>
+</template>
+
+<template name="Messages">
+	{{#if you}}
+		<div class="errand-view__chat-listitem">
+			<div class="errand-view__chat-listitem-wrap you">
+				<div class="image image--circle image--tiny relative">
+					<span class="avatar__tag small">{{initials}}</span>
+				</div>
+				<div class="errand-view__chat-list-content">
+					<div class="errand-view__chat-list-name">
+						<b>you</b>
+						<span>{{formatDate date}}</span>
+					</div>
+					<div class="errand-view__chat-list-message">{{message}}</div>
+				</div>
+			</div>
+		</div>
+	{{else}}
+		<div class="errand-view__chat-listitem">
+			<div class="errand-view__chat-listitem-wrap runner right">
+				<div class="errand-view__chat-list-content">
+					<div class="errand-view__chat-list-name">
+						<b>{{userType}}</b> 
+						<span>{{formatDate date}}</span>
+					</div>
+					<div class="errand-view__chat-list-message">{{message}}</div>
+				</div>
+				<div class="image image--circle image--tiny relative">
+					{{avatar}}
+					<span class="avatar__tag small">{{initials}}</span>
+				</div>
+			</div>
+		</div>
+	{{/if}}
+</template>
+
+<template name="Map">
+	<div class="errand__google-map">
+		{{> googleMap name="map" options=mapOptions}}
+	</div>
+</template>

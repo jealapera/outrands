@@ -1,0 +1,15 @@
+/**
+ * MAIN CONTENT
+ */
+.main--admin {
+	@include media-query(desk-start) {
+		width: 80%;
+		float: right;
+	}
+}
+
+.main-content {
+	padding: 16px 8px;
+	background-color: darken($white, 5%);
+	min-height: 640px;
+}

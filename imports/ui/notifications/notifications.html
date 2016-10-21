@@ -1,0 +1,36 @@
+<template name="Notifications">
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="title title--medium bottom24">Notifications</div>
+			<div class="row">
+				{{#each notifications}}
+					{{> Notification}}
+				{{/each}}
+			</div>
+			{{#if hasMoreNotifications}}
+				<button class="button button--red top32" id="show-more-notif">+ Show more</button>
+			{{else}}
+				{{#if noNotifications}}
+					<p class="top32" style="color: #F16362; font-weight: bold;">You don't have any notifications yet.</p>
+				{{else}}
+					<p class="top32" style="color: #F16362; font-weight: bold;">No more notifications to show.</p>
+				{{/if}}
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+<template name="Notification">
+	<div class="col-xs-12">
+		<div class="profile-errand">
+			<div class="profile-errand__title">
+				<div class="title title--small"><a href="/view-profile/{{notifFrom}}"><b>{{fullName}}</b> </a> {{notif}} <a href={{link}} id="notif" data-notif-id={{notifId}}><b>{{notifOn}}</b></a>.</div>
+				<div class="card__date top16"><b>{{formatDate date}}</b></div>
+			</div>
+			<div class="profile-errand__actions">
+				<a href={{link}} class="button" id="view" data-notif-id={{notifId}}>View</a>
+				<i class="fa fa-exclamation-circle title title--small" aria-hidden="true" style="margin-left: 8px; color: {{color}}"></i>
+			</div>
+		</div>
+	</div>
+</template>

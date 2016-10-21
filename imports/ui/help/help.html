@@ -1,0 +1,53 @@
+<template name="Help">
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="title title--medium bottom32">Help and Feedback(s)</div>
+					<div class="content">Hi <b>{{usersName}}</b>, how can we help you? Please tell us what are your comments and concerns.</div>
+				</div>
+			</div>
+			<!-- errand-form -->
+			<div class="row errand-form top16">
+				<form class="col-xs-12">
+					<div class="row">
+						<div class="col-xs-12 bottom16">
+							<input type="text" name="" id="name" placeholder="Your Name" maxlength="40" required>
+						</div>
+						<div class="col-xs-12 bottom16">
+							<input type="email" name="" id="email-address" placeholder="Your Email Address" maxlength="40" required>
+						</div>
+						<div class="col-xs-12 bottom16">
+							<input type="text" name="" id="question" placeholder="Your Question" maxlength="60" required>
+						</div>
+						<div class="col-xs-12 bottom16">
+							<textarea id="message" placeholder="Type your complains and suggestions here..." class="errand-form__description" required></textarea>
+						</div>
+						<div class="col-xs-12 bottom16">
+							<div class="bottom32" id="error-msg" style="color: #F16362;"></div>
+							<input type="submit" name="" value="Send" class="button button--red errand-form__submit">
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- errand-form -->
+		</div>
+	</div>
+</template>
+
+<template name="SubmitAlert">
+	<div class="modal fade">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Success!</h4>
+				</div>
+				<div class="modal-body">
+					<h5 class="modal-title">Your report has been submitted! Thank you for choosing <a href="/" id="outrands"><b>OutRands</b></a>. ^^</h5>
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,66 @@
+/**
+ * SIDEBAR
+ */
+
+.sidebar-o {
+	background-color: $brand;
+	width: 240px;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 900;
+	@include vendor(transform, translateX(-240px));
+	@include vendor(transition, transform 0.3s);
+
+	@include media-query(desk-start) {
+		width: 20%;
+		@include vendor(transform, translateX(0));
+	}
+
+	&.open {
+		@include vendor(transform, translateX(0));
+	}
+}
+
+.sidebar__avatar {
+	padding: 16px;
+}
+
+.sidebar__nav {
+	padding: 16px 0 0;
+	margin: 0;
+}
+
+.sidebar__nav-link {
+	color: $white;
+	display: block;
+	padding: 12px 32px;
+	position: relative;
+
+	&:hover,
+	&.active {
+		background-color: darken($brand, 6%);
+	}
+
+	&:hover,
+	&:focus {
+		color: $white;
+	}
+}
+
+.sidebar__nav-status {
+	position: absolute;
+	right: 20px;
+	top: 50%;
+	background-color: $red;
+	color: $white;
+	font-size: 10px;
+	display: inline-block;
+	text-align: center;
+	line-height: 20px;
+	width: 20px;
+	height: 20px;
+	@include vendor(border-radius, 20px);
+	@include vendor(transform, translateY(-50%));
+}

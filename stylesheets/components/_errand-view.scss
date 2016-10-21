@@ -1,0 +1,296 @@
+.errand-view {
+
+}
+
+.errand-view__header {
+	@include vendor(display, flex);
+	@include vendor(justify-content, space-between);
+}
+
+.errand-view__date-loc {
+	@include media-query(lap-start) {
+		@include vendor(display, flex);
+		@include vendor(justify-content, space-between);
+	}
+}
+
+.errand-view__avatar {
+	@include vendor(display, flex);
+	@include vendor(align-items, center);
+
+	.image {
+		margin-right: 16px;
+		@include vendor(flex, none);
+	}
+}
+
+.errand-view__status {
+	font-size: em(12);
+	text-transform: uppercase;
+	font-weight: 500;
+
+	&.green {
+		color: $green;
+	}
+
+	&.red {
+		color: $red;
+	}
+
+	&.blue {
+		color: $blue;
+	}
+}
+
+.errand-view__wrap {
+	background: $white;
+	padding: 16px;
+
+	&.map {
+		padding: 0;
+	}
+}
+
+.errand-view__date {
+	span {
+		font-size: em(12);
+		font-weight: 500;
+		display: block;
+		text-transform: uppercase;
+	}
+
+	b {
+		color: $red;
+	}
+}
+
+.errand-view__location {
+	span {
+		font-size: em(12);
+		font-weight: 500;
+		display: block;
+		text-transform: uppercase;
+	}
+}
+
+.errand-view__fee {
+	span {
+		font-size: em(12);
+		font-weight: 500;
+		display: block;
+		text-transform: uppercase;
+	}
+
+	b {
+		font-size: em(28);
+		color: $red;
+	}
+}
+
+.errand-view__bidders-price {
+	margin: 16px 0;
+
+	span {
+		font-size: em(12);
+		font-weight: 500;
+		display: block;
+		text-transform: uppercase;
+	}	
+}
+
+.errand-view__bidders-item {
+	border-top: 1px solid lighten($black, 80%);
+	margin-top: 16px;
+	padding-top: 16px;
+
+	@include media-query(lap-start) {
+		margin-top: 0;
+		padding-top: 0;
+		@include vendor(display, flex);
+		@include vendor(align-items, center);
+		@include vendor(justify-content, space-between);
+	}
+
+	&:first-child {
+		border-top: 0;
+	}
+}
+
+.errand-view__price {
+	input {
+		width: 100%;
+		margin-top: 16px;
+	}
+}
+
+.errand-view__buttons {
+	.button {
+		width: 100%;
+		text-align: center;
+
+		&:first-child {
+			margin-bottom: 8px;
+		}
+
+		@include media-query(lap-start) {
+			width: auto;
+			margin-right: 8px;
+			text-align: left;
+		}
+	}
+}
+
+.errand-view__rating {
+	.button {
+		width: 100%;
+		text-align: center;
+	}
+}
+
+.errand-view__rating-form {
+	@include media-query(lap-start) {
+		.errand-view__select {
+			margin-bottom: 0;
+			width: 100%;
+		}
+	}
+
+	@include media-query(lap-start) {
+		.button {
+			margin-bottom: 0;
+			width: 28%;
+			text-align: center;
+		}
+	}
+}
+
+.errand-view__service-fee {
+	width: 100%;
+
+	span {
+		display: block;
+		font-size: em(12);
+		font-weight: 500;
+		text-transform: uppercase;
+	}
+
+	b {
+		line-height: 1;
+		font-size: em(28);
+	}
+}
+
+.errand-view__select {
+	width: 100%;
+	margin-bottom: 8px;
+}
+
+.errand-view__cancel-form {
+	.button {
+		width: 100%;
+		text-align: center;
+
+		@include media-query(lap-start) {
+			width: auto;
+		}
+	}
+
+	textarea {
+		height: 180px;
+		margin-bottom: 8px;
+	}
+}
+
+.errand-view__chat-form {
+	textarea {
+		width: 100%;
+		height: 100px;
+		margin-bottom: 8px;
+	}
+
+	.button {
+		width: 100%;
+		text-align: center;
+
+		@include media-query(lap-start) {
+			width: auto;
+		}
+	}
+}
+
+.errand-view__chat-listitem-wrap {
+	margin: 16px 0;
+	width: 100%;
+	max-width: 340px;
+	@include vendor(display, flex);
+
+	.image {
+		@include vendor(flex, none);
+	}
+
+	&.you {
+		float: left;
+
+		.image {
+			margin-right: 8px;
+		}
+	}
+
+	&.runner {
+		float: right;
+		@include vendor(justify-content, flex-end);
+
+		.image {
+			margin-left: 8px;
+		}
+	}
+}
+
+.errand-view__chat-list-name {
+	margin-bottom: 8px;
+
+	span {
+		font-size: em(12);
+	}
+}
+
+.errand-view__chat-list-message {
+	opacity: 0.8;
+	word-break: break-word;
+}
+
+.errand-view__chat-list-content {
+	font-size: em(14);
+	line-height: 1.3;
+}
+
+.errand-view__chat-list-wrap {
+	height: 480px;	
+	position: relative;
+}
+
+.errand-view__chat-list {
+	padding: 0 16px;
+	position: absolute;
+	min-height: 100px;
+	max-height: 480px;
+	overflow-y: auto;
+	width: 100%;
+	bottom: 0;
+}
+
+.errand-view__chat-listitem {
+	width: 100%;
+}
+
+.errand__google-map {
+	height: 400px;
+}
+
+.errand-view__description {
+	word-break: break-word;
+}
+
+.dtp > .dtp-content {
+	max-height: 544px;
+}

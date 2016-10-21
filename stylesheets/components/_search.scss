@@ -1,0 +1,11 @@
+/**
+ * SEARCH
+ */
+
+.search__txt-field {
+	margin-bottom: 16px;
+
+	@include media-query(lap-start) {
+		margin-bottom: 0;
+	}
+}

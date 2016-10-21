@@ -1,0 +1,58 @@
+/**
+ * HEADER
+ */
+
+.header {
+	padding-top: 24px;
+}
+
+.header__wrap {
+	position: relative;
+}
+
+.header--admin {
+	background-color: $white;
+	padding: 16px;
+}
+
+.header__hamburger {
+	float: left;
+
+	@include media-query(desk-start) {
+		display: none;
+	}
+}
+
+.header__icons {
+	float: right;
+}
+
+.header__dropdown {
+	display: inline-block;
+}
+
+/**
+ * header--centered
+ */
+.header--centered {
+	text-align: center;
+	padding-top: 48px;
+
+	.logo {
+		display: inline-block;
+		width: 220px;
+		text-align: center;
+
+		@include media-query(lap-start) {
+			width: 420px;
+		}
+	}
+
+	svg {
+		width: 220px;
+
+		@include media-query(lap-start) {
+			width: 420px;
+		}
+	}
+}

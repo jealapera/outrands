@@ -1,0 +1,43 @@
+<head>
+	<title>OutRands</title>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+	{{#if currentUser}}
+		{{> UserMainLayout}}
+	{{else}}
+		{{> MainLayout}}
+	{{/if}}
+</body>
+
+<template name="MainLayout">
+	<!-- main -->
+	<main class="main">
+		{{> Template.dynamic template=header}}
+		{{> Template.dynamic template=main}}
+		{{> Template.dynamic template=footer}}
+	</main>
+	<!-- main -->
+</template>
+
+<template name="UserMainLayout">
+	{{> Template.dynamic template=sidebarUser}}
+	<!-- main -->
+	<main class="main main--admin">
+		{{> Template.dynamic template=headerUser}}
+		{{>	Template.dynamic template=mainUser}}
+		{{> Template.dynamic template=footerUser}}
+	</main>
+	<!-- main -->
+</template>
+
+<template name="AdminMainLayout">
+	<!-- main -->
+	<main class="main main--admin">
+		
+	</main>
+	<!-- main -->
+</template>

@@ -1,0 +1,91 @@
+<template name="Dashboard">
+	<!-- main-content -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- search -->
+			<div class="search bottom16">
+				<div class="row">
+					<div class="col-xs-12 col-sm-8 col-lg-9">
+						<input class="search__txt-field" id="search" type="text" placeholder="Search">
+					</div>
+					<div class="col-xs-12 col-sm-4 col-lg-3">
+						<div class="button-group">
+							<a href="" class="button button--grey active" id="search-title">Title</a>
+							<a href="" class="button button--grey" id="search-location">Location</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- search -->
+			<!-- cards -->
+			<div class="row">
+				{{#if searching}}
+					<p class="col-xs-12" style="color: #384D68; font-weight: bold;">Searching...</p>
+				{{else}}
+					{{#if query}}
+						{{#each foundPosts}}
+							{{> ErrandPost}}
+						{{else}}
+							<p class="col-xs-12" style="color: #F16362; font-weight: bold;">Nothing found for {{query}}.</p>
+						{{/each}}
+					{{else}}
+						{{#each errandPosts}}
+							{{> ErrandPost}}
+						{{/each}}
+					{{/if}}
+				{{/if}}
+			</div>
+			<!-- cards -->
+			{{#if searching}} 
+			{{else}}
+				{{#if query}}
+					{{#if hasMoreFoundPosts}}
+						<button class="button button--red" id="show-more">+ Show more</button>
+					{{else}}
+						{{#if nothingFound}}
+						{{else}}
+							<p style="color: #F16362; font-weight: bold;">No more posts to show.</p>
+						{{/if}}
+					{{/if}}
+				{{else}}
+					{{#if hasMorePosts}}
+						<button class="button button--red" id="show-more">+ Show more</button>
+					{{else}}
+						<p style="color: #F16362; font-weight: bold;">No more posts to show.</p>
+					{{/if}}
+				{{/if}}
+			{{/if}}
+		</div>
+	</div>
+	<!-- main-content -->
+</template>
+
+<template name="ErrandPost">
+	<div class="col-xs-12 col-sm-6 col-md-4">
+		<div class="card clearfix bottom16">
+			<div class="card__header">
+				<div class="card__user-img relative">
+					<span class="avatar__tag">{{initials}}</span>
+				</div>
+				<div>
+					<div class="card__title">{{title}}</div>
+					<div class="card__date">Posted on <b>{{formatDate postDate}}</b></div>
+				</div>
+			</div>
+			<div class="card__divider"></div>
+			<div class="card__body">
+				<div class="card__date card__date--red">Due date: <b>{{formatDate dueDate}}</b></div>
+				<div class="card__date">Location: <b>{{address}}</b></div>
+				<div class="card__status {{class}}"></div>
+				<p class="card__content">{{description}}</p>
+			</div>
+			<div class="card__footer">
+				<a href="/view-errand/{{postId}}" class="button">View</a>
+				<div class="card__price">
+					<b>PHP</b>
+					<span>{{formatNumber serviceFee}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

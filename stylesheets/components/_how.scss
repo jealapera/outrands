@@ -1,0 +1,27 @@
+/**
+ * HOW
+ */
+
+.how {
+	@include media-query(lap-start) {
+		margin-bottom: 32px;
+	}
+
+	@include media-query(desk-start) {
+		margin-bottom: 56px;
+	}
+}
+
+.how__media {
+	text-align: center;
+	max-width: 300px;
+	margin: 0 auto;
+}
+
+.how__icon {
+	margin-bottom: 16px;
+
+	@include media-query(desk-start) {
+		margin-bottom: 24px;
+	}
+}

@@ -1,0 +1,75 @@
+/**
+ * LOGIN
+ */
+
+.login {
+	padding-top: 32px;
+	padding-bottom: 64px;
+
+	@include media-query(lap-start) {
+		padding-top: 96px;
+		padding-bottom: 150px;
+	}
+
+	@include media-query(desk-start) {
+		
+	}
+}
+
+.login__form {
+	max-width: 500px;
+	margin: 0 auto;
+
+	.title {
+		@include media-query(lap-start) {
+			font-size: em(42);
+		}
+	}
+}
+
+.login__svg {
+	margin: 0 auto;
+	width: 120px;
+	display: block;
+}
+
+.login__content {
+	text-align: center;
+}
+
+.login__forgot {
+	@include media-query(lap-start) {
+		text-align: left;
+	}
+}
+
+.login__account {
+	@include media-query(lap-start) {
+		text-align: left;
+	}
+}
+
+.login__button {
+	margin-bottom: 16px;
+	width: auto;
+
+	@include media-query(lap-start) {
+		margin-bottom: 0;
+	}
+}
+
+.login__with {
+	.button {
+		margin: 0 4px;
+	}
+}
+
+.login__buttons {
+	text-align: center;
+
+	@include media-query(lap-start) {
+		@include vendor(display, flex);
+		@include vendor(align-items, center);
+		@include vendor(justify-content, space-between);
+	}
+}

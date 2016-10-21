@@ -1,0 +1,75 @@
+<template name="MyRunners">
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="title title--medium bottom24">My Runners</div>
+			<div class="row">
+				{{#each runners}}
+					{{> Runner}}
+				{{/each}}	
+			</div>
+			{{#if hasMoreRunners}}
+				<button class="button button--red top32" id="show--more">+ Show more</button>
+			{{else}}
+				{{#if noRunners}}
+					<p class="top32" style="color: #F16362; font-weight: bold;">You don't have any runners yet.</p>
+				{{else}}
+					<p class="top32" style="color: #F16362; font-weight: bold;">No more runners to show.</p>
+				{{/if}}
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+<template name="Runner">
+	<div class="col-xs-12">
+		<div class="profile-errand">
+			<div class="profile-errand__title">
+				<div class="profile-errand__title-wrap">
+					<div class="avatar right8">
+						<div class="avatar__img-wrap relative">
+							<a href="/view-profile/{{userId}}">
+								<span class="avatar__tag">{{initials}}</span>
+							</a>
+						</div>
+					</div>
+					<div>
+						<div class="title title--small"><a href="/view-profile/{{userId}}">{{fullName}}</a></div>
+						<div class="card__date">
+							<b class="right8">Runner Rating ({{formatRate runnerRating}})</b>
+							<i class="fa {{star1}}" aria-hidden="true"></i>
+							<i class="fa {{star2}}" aria-hidden="true"></i>
+							<i class="fa {{star3}}" aria-hidden="true"></i>
+							<i class="fa {{star4}}" aria-hidden="true"></i>
+							<i class="fa {{star5}}" aria-hidden="true"></i>
+						</div>
+						<div class="card__date"><b>Runner Income:</b> <b style="color: #f16362;">PHP {{formatNumber runnerIncome}}</b></div>
+					</div>
+				</div>
+			</div>
+			<div class="profile-errand__actions">
+				{{#if favorite}}
+					<a href="" class="button" style="color:yellow;" data-runner-id={{userId}}><i class="fa fa-star" aria-hidden="true"></i></a>
+				{{else}}
+					<a href="" class="button" data-runner-id={{userId}}><i class="fa fa-star" aria-hidden="true"></i></a>
+				{{/if}}
+				<button class="button" id="remove" data-runner-id={{runnerId}}><i class="fa fa-user-times" aria-hidden="true"></i></button>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="RemoveConfirmation">
+	<div class="modal fade">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Are you sure you want to remove this runner?</h5>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" id="yes" data-runner-id={{removedRunner.runnerId}}>Yes</button>
+					<button type="button" class="btn btn-primary" id="no">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

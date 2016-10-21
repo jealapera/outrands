@@ -1,0 +1,22 @@
+/**
+ * LINKS
+ */
+
+a {
+	color: $brand;
+	text-decoration: none;
+	outline: 0;
+
+	&:active,
+	&:visited,
+	&:focus,
+	&:hover {
+		outline: 0;
+		text-decoration: none;
+	}
+
+	&:hover,
+	&:focus {
+		color: $brand;
+	}
+}

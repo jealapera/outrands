@@ -1,0 +1,37 @@
+<template name="ErrandActivities">
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="title title--medium bottom24">My Errand Activities</div>
+			<div class="row">
+				{{#each errandActivities}}
+					{{> ErrandActivity}}
+				{{/each}}
+			</div>
+			{{#if hasMoreErrandActivities}}
+				<button class="button button--red top32" id="show--more">+ Show more</button>
+			{{else}}
+				{{#if noErrandActivities}}
+					<p class="top32" style="color: #F16362; font-weight: bold;">You're not involved to any errand activities yet.</p>
+				{{else}}
+					<p class="top32" style="color: #F16362; font-weight: bold;">No more activities to show.</p>
+				{{/if}}
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+<template name="ErrandActivity">
+	<div class="col-xs-12">
+		<div class="profile-errand">
+			<div class="profile-errand__title">
+				<div class="title title--small bottom16"><a href="/view-errand/{{postId}}">{{title}}</a></div>
+				<div class="card__date"><b>Due Date:</b> {{formatDate dueDate}}</div>
+				<div class="card__date"><b>Date Accepted:</b> {{formatDate date}}</div>
+				<div class="card__date"><b>Status:</b> <b style="color: {{color}};">{{status}}</b></div>
+			</div>
+			<div class="profile-errand__actions">
+				<a href="/errand-tracking/{{postId}}" class="button">View Activity</a>
+			</div>
+		</div>
+	</div>
+</template>

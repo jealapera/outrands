@@ -1,0 +1,46 @@
+/**
+ * LOGO
+ */
+
+.logo {
+	display: block;
+	width: 175px;
+	height: 25px;
+	margin: 0 auto 24px;
+
+	svg {
+		@include media-query(lap-start) {
+			height: 40px;
+		}	
+	}
+
+	@include media-query(lap-start) {
+		margin: 0;
+		height: 40px;
+	}
+}
+
+/**
+ * logo--admin
+ */
+.logo--admin {
+	margin: 0;
+	width: 120px;
+	position: absolute;
+	top: 50%;
+	left: 44%;
+	@include vendor(transform, translate(-50%, -50%));
+
+	svg {
+		width: 100%;
+	}
+
+	@include media-query(lap-start) {
+		left: 50%;
+	}
+
+	@include media-query(desk-start) {
+		left: 10px;
+		@include vendor(transform, translate(0, -50%));
+	}
+}

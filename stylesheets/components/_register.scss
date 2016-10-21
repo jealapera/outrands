@@ -1,0 +1,29 @@
+/**
+ * REGISTER
+ */
+
+.register {
+	padding-top: 32px;
+	padding-bottom: 64px;
+	text-align: center;
+
+	@include media-query(lap-start) {
+		padding-top: 96px;
+		padding-bottom: 150px;
+	}
+}
+
+.register__form {
+	max-width: 500px;
+	margin: 0 auto;
+
+	.title {
+		@include media-query(lap-start) {
+			font-size: em(42);
+		}
+	}
+}
+
+.register__button {
+	width: auto;
+}

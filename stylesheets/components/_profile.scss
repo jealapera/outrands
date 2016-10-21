@@ -1,0 +1,41 @@
+.profile__label {
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.profile__content {
+	font-size: 18px;
+}
+
+.profile-errand {
+	border-bottom: 1px solid lighten($black, 80%);
+	background-color: $white;
+	padding: 24px;
+	@include vendor(display, flex);
+	@include vendor(justify-content, space-between);
+	@include vendor(flex-wrap, wrap);
+}
+
+.profile-errand__title {
+	width: 100%;
+	margin-bottom: 16px;
+
+	@include media-query(lap-start) {
+		width: 60%;
+		margin-bottom: 0;
+	}
+}
+
+.profile-errand__actions {
+	width: 100%;
+
+	@include media-query(lap-start) {
+		text-align: right;
+		width: 36%;
+	}
+}
+
+.profile-errand__title-wrap {
+	@include vendor(display, flex);
+}

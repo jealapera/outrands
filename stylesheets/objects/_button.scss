@@ -1,0 +1,99 @@
+/**
+ * BUTTON
+ */
+
+.button {
+	background-color: $brand;
+	border: 0;
+	color: $white;
+	display: inline-block;
+	font-weight: 400;
+	line-height: 1;
+	padding: 12px 32px;
+	@include vendor(border-radius, 2px);
+
+	&:hover,
+	&:focus {
+		color: $white;
+	}
+
+	&:disabled {
+		opacity: 0.4;
+	}
+}
+
+.button--white {
+	background-color: $white;
+	color: $black;
+
+	&:hover,
+	&:focus {
+		color: $black;
+	}
+}
+
+.button--brand {
+	background-color: $brand;
+}
+
+.button--red {
+	background-color: $red;
+
+	&:hover {
+		color: $white;
+	}
+}
+
+.button--grey {
+	background-color: darken($white, 15%);
+}
+
+.button--fb {
+	background-color: #3B5998;
+}
+
+.button--gplus {
+	background-color: #C53929
+}
+
+/**
+ * button-group
+ */
+.button-group {
+	overflow: hidden;
+	@include clearfix;
+	@include vendor(border-radius, 2px);
+	@include vendor(display, flex);
+
+	.button {
+		color: $brand;
+		float: left;
+		text-align: center;
+		@include vendor(border-radius, 0);
+		@include vendor(flex, auto);
+
+		&.active {
+			color: $white;
+			background-color: $brand;
+		}
+	}
+}
+
+/**
+ * button--fab
+ */
+.button--fab {
+	width: 56px;
+	height: 56px;
+	margin: 0;
+	padding: 0;
+	position: fixed;
+	right: 24px;
+	bottom: 24px;
+	z-index: 900;
+	@include vendor(border-radius, 100%);
+
+	@include media-query(lap-start) {
+		bottom: 52px;
+	}
+}
